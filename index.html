@@ -7,20 +7,31 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 0;
       padding: 0;
+      background-color: #f0f0f0;
+      background-image: url('panda.jpg'); /* Replace 'panda.png' with the name of your panda image */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center top;
+      height: 100vh;git add .
     }
+    
     .container {
       max-width: 400px;
-      margin: auto;
+      margin: 150px auto; /* Adjusted margin to position below the panda */
       padding: 20px;
-      background-color: #f4f4f4;
+      background-color: white;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h2 {
       text-align: center;
     }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
     label, input, button {
       display: block;
       width: 100%;
@@ -28,18 +39,28 @@
       padding: 10px;
       font-size: 1rem;
     }
+
+    input {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
     button {
       background-color: #4CAF50;
       color: white;
       border: none;
       cursor: pointer;
+      border-radius: 5px;
     }
+
     button:hover {
       background-color: #45a049;
     }
+
     .result {
-      text-align: center;
       margin-top: 20px;
+      font-size: 1.2rem;
+      color: #333;
     }
   </style>
 </head>
@@ -53,7 +74,36 @@
     
     <div class="result" id="result"></div>
   </div>
-  
-  <script src="app.js"></script>
+
+  <script>
+    function calculateAPI() {
+      const specificGravity = parseFloat(document.getElementById('specificGravity').value);
+      const resultDiv = document.getElementById('result');
+
+      if (!specificGravity || specificGravity <= 0) {
+        resultDiv.innerHTML = "Please enter a valid specific gravity.";
+        return;
+      }
+
+      // Calculate API gravity
+      const apiGravity = 141.5 / specificGravity - 131.5;
+
+      // Determine crude type based on API gravity
+      let crudeType = '';
+      if (apiGravity > 31.1) {
+        crudeType = 'Lighter Crude';
+      } else if (apiGravity > 23.1 && apiGravity <= 31.1) {
+        crudeType = 'Medium Crude';
+      } else if (apiGravity > 10 && apiGravity <= 23.1) {
+        crudeType = 'Heavier Crude';
+      } else {
+        crudeType = 'Extra Heavy Crude';
+      }
+
+      // Display result
+      resultDiv.innerHTML = `API Gravity: ${apiGravity.toFixed(2)}<br>Crude Type: ${crudeType}`;
+    }
+  </script>
 </body>
 </html>
+
